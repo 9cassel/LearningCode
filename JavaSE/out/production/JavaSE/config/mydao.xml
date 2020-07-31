@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<map>
+    <select id = "sql1" resultType = "com.qifan.javase.mydao.bean.Student">
+        select id, name, age from student;
+    </select>
+
+    <select id="sql2" resultType="com.qifan.javase.mydao.bean.Student">
+        select id, name, age from student where id = #{id};
+    </select>
+    <insert id="sql3" resultType="com.qifan.javase.mydao.bean.Student">
+        insert into student(name, age) values ( #{name} , #{age} );
+    </insert>
+
+    <delete id="sql4" resultType="com.qifan.javase.mydao.bean.Student">
+        delete from student where id = #{id} ;
+    </delete>
+
+    <select id="sql5" resultType="com.qifan.javase.mydao.bean.Student">
+        select id, name, age from student where name like #{name} ;
+    </select>
+</map>
