@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编码练习题</title>
+</head>
+<body>
+<script>
+
+    function program1(x) {
+        if (x == 1 || x == 2) {
+            return 1;
+        } else {
+            return program1(x - 2) + program1(x - 1);
+        }
+    }
+    // console.log(program1(20));
+
+    function program2() {
+        var result = new Array();
+        for (var i = 101; i < 200; i++) {
+            var flag = true;
+            for (var j = 2; j < i / 2; j++) {
+                if (i % j == 0) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
+                result[result.length] = i;
+            }
+        }
+        return result;
+    }
+    // console.log(program2());
+
+    function program3() {
+        var result = new Array();
+        for (var i = 100; i < 1000; i++) {
+            var ge = i % 10;
+            var shi = (i - ge) / 10 % 10;
+            var bai = (i - shi * 10 - ge) / 100;
+            if (i == ge * ge * ge + shi * shi * shi + bai * bai * bai) {
+                result[result.length] = i;
+            }
+        }
+        return result;
+    }
+    // console.log(program3());
+
+    function program4(x) {
+        var result = new Array();
+        for (var i = 2;; i++) {
+            if (x % i == 0) {
+                x /= i;
+                result[result.length] = i;
+                i--;
+            }
+            if (x == 1) {
+                break;
+            }
+        }
+        return result;
+    }
+    // console.log(program4(90));
+
+    function program5(x) {
+        if (x == null) {
+            return "error";
+        }
+        var result = x < 60 ? "c" : x < 90 ? "b" : "a";
+        return result;
+    }
+    // console.log(program5(90));
+
+    function program6(x, y) {
+        var great = x;
+        var less = y;
+        var gongyueshu;
+        var gongbeishu;
+        if (x < y) {
+            var tem = less;
+            less = great;
+            great = tem;
+        }
+        var temp;
+        while(true) {
+            temp = great % less;
+            if (temp == 0) {
+                gongyueshu = less;
+                break;
+            }
+            great = less;
+            less = temp;
+        }
+        gongbeishu = x * y / gongyueshu;
+        return "公倍数：" + gongbeishu + ",公约数：" + gongyueshu;
+    }
+    // console.log(program6(100, 99));
+
+    function program7(x, y) {
+        var result = y;
+        for (var i = 0; i < x - 1; i++) {
+            result += result * 10 + y;
+        }
+        return result;
+    }
+    // console.log(program7(3, 2));
+
+    function program8() {
+        var height = 100/2;
+        var result = 100;
+        for (var i = 1; i < 10; i++) {
+            result += height * 2;
+            height /= 2;
+        }
+        return "路程：" + result + "，高度：" + height;
+    }
+    // console.log(program8());
+
+    function program9() {
+        var count = 0;
+        var result = new Array();
+        for (var i = 1; i <= 4; i++) {
+            var bai = i * 100;
+            for (var j = 1; j <= 4; j++) {
+                var shi = j * 10;
+                for (var k = 1; k <= 4; k++) {
+                    var number = bai + shi + k;
+                    if (i == j || i == k || j == k) {
+                        continue;
+                    }
+                    count++;
+                    result[result.length] = number;
+                }
+            }
+        }
+        return result;
+    }
+    // console.log(program9());
+
+    function program10(x) {
+        var flag = false;
+        if (x % 4 == 0) {
+            flag = true;
+        }
+        return flag;
+    }
+    // console.log(program10(2008));
+
+    function program11(x, y, z) {
+        var x = x;
+        var y = y;
+        var z = z;
+        var temp;
+        if (x > y) {
+            if (x > z) {
+                temp = x;
+                x = z;
+                z = temp;
+            } else {
+                temp = x;
+                x = y;
+                y = temp;
+            }
+        } else if (y > z) {
+            temp = y;
+            y = z;
+            z = temp;
+        }
+        return x + "," + y + "," + z;
+    }
+    // console.log(program11(1,3,4));
+
+    function program12() {
+        for (var i = 1; i <= 9; i++) {
+            var str = "";
+            for (var j = 1; j <= i; j++) {
+                str += i + "*" + j + "=" + i*j + "\t";
+            }
+            console.log(str);
+        }
+    }
+    // console.log(program12())
+
+    function program13() {
+
+    }
+
+    function program14() {
+        var size = 7;
+        for (var i = 0; i < (size + 1)/2; i++) {
+            var str = "";
+            for (var j = 0; j < (size + 1)/2 - 1 - i; j++) {
+                str += " ";
+            }
+            for (var j = 0; j < 2 * (i + 1) - 1; j++) {
+                str += "*";
+            }
+            console.log(str);
+        }
+        for (var i = (size - 1)/2; i > 0; i--) {
+            var str = "";
+            for (var j = 0; j < (size - 1)/2 - i + 1; j++) {
+                str += " ";
+            }
+            for (var j = 0; j < i * 2 - 1; j++) {
+                str += "*";
+            }
+            console.log(str);
+        }
+    }
+    // console.log(program14());
+
+    function program15(x) {
+        var result = 0;
+        var fenzi = 1;
+        var fenmu = 1;
+        for (var i = 0; i < x; i++) {
+            var temp = fenzi;
+            fenzi = fenzi + fenmu;
+            fenmu = temp;
+            result += fenzi / fenmu;
+        }
+        return result;
+    }
+    // console.log(program15(20));
+
+    function program16(x) {
+        if (x == 1) {
+            return 1;
+        }
+        var result = 1;
+        for (var i = 1; i <= x; i++) {
+            result *= i;
+        }
+        return result + program16(x - 1);
+    }
+    // console.log(program16(3));
+
+    function program17(x) {
+        var result = new Array();
+        while (x != 0) {
+            var num = x % 10;
+            x = (x - num)/10;
+            result[result.length] = num;
+        }
+        return result;
+    }
+    // console.log(program17(12345));
+
+    function program18(x) {
+        var arr = program17(x);
+        if (arr[0] == arr[4] && arr[1] == arr[3]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    // console.log(program18(12322));
+
+    function program19(x) {
+        var result = new Array();
+        for (var i = 0; i < x; i++) {
+            result[i] = new Array();
+            for (var j = 0; j <= i; j++) {
+                if (j == 0 || j == i) {
+                    result[i][j] = 1;
+                } else {
+                    result[i][j] = result[i - 1][j - 1] + result[i - 1][j];
+                }
+            }
+        }
+        return result;
+    }
+    // console.log(program19(10));
+
+    function program20(x) {
+        var arr = new Array();
+        var count = x;
+        var index = 0;
+        var number = 0;
+        while(true) {
+            // console.log("number:" + number);
+            // console.log("index:" + index);
+            if (arr[index] === false) {
+                // console.log("false");
+                index++;
+                index %= x;
+                continue;
+            }
+            if (number % 3 === 2) {
+                // console.log("-------");
+                arr[index] = false;
+                // console.log(arr[index]);
+                count--;
+                // console.log(count);
+            } else {
+                arr[index] = true;
+            }
+            number++;
+            index++;
+            index = index % x;
+            console.log(arr);
+            if (count === 1) {
+                for (var i = 0; i < arr.length; i++) {
+                    // console.log(arr.length);
+                    // console.log(arr);
+                    if (arr[i] === true) {
+                        return i+1;
+                    }
+                }
+            }
+        }
+    }
+    // console.log(program20(10));
+
+</script>
+</body>
+</html>

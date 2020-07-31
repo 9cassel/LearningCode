@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table Test</title>
+    <style>
+        #StuInfo {
+            text-align: center;
+            border: solid 1px cadetblue;
+            width: 55%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        span {
+            display: flow;
+            float: right;
+        }
+        table {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            border: black solid 1px;
+        }
+        td {
+            border: black solid 1px;
+            text-align: center;
+        }
+        #checkBox {
+            width: 10%;
+        }
+        thead {
+            background-color: lightgray;
+        }
+    </style>
+
+    <script src="jquery-3.5.1.js"> </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#selectAll").change(function () {
+                var cb = $("input[name='cbTr']");
+                for (let i = 0; i < cb.length; i++) {
+                    cb[i].checked = this.checked;
+                }
+            })
+
+            $("#btnAdd").click(function () {
+                add();
+            })
+
+            $("#btnDelete").click(function () {
+                let delCount = del();
+                alert("删除了" + delCount + "条数据！");
+            })
+
+            init();
+
+        })
+
+        function add() {
+            let stuName = $("#txtName")[0].value;
+            let stuAge = $("#txtAge")[0].value;
+            let stuGender = $("#selGender")[0].value;
+            if (stuName.trim() === "" || stuAge.trim() === "") {
+                return
+            }
+            let $cb = $('<td><input type="checkbox" name="cbTr"></td>');
+            $cb[0].firstElementChild.checked = $("#selectAll")[0].checked;
+            let $name = $('<td class="txtTd">' + stuName + '</td>');
+            let $age = $('<td class="txtTd">' + stuAge + '</td>');
+            let $sel = $('<td class="selTd">' + stuGender + '</td>');
+            let $tr = $('<tr></tr>');
+            $tr.append($cb,$name,$age,$sel);
+            $('#table tbody').append($tr);
+            init();
+        }
+
+        function del() {
+            let count = 0;
+            var cb = $("input[name='cbTr']");
+            for (let i = 0; i < cb.length; i++) {
+                let check = cb[i].checked;
+                if (check) {
+                    count++;
+                    let cbElement = cb[i];
+                    $(cbElement).parent().parent().remove();
+                }
+            }
+            return count;
+        }
+
+        function init() {
+
+            $(".txtTd").dblclick(function (e) {
+                let td = $(e.currentTarget);
+                let content = td[0].textContent;
+                if (content === "") {
+                    if (td[0].firstElementChild.tagName === "INPUT") {
+                        return;
+                    }
+                }
+                td.empty();
+                let input = $("<input type='text' value="+ content +">");
+                td.append(input);
+                input.focus();
+                input.select();
+                input.blur(function () {
+                    let value = this.value;
+                    if (value.trim() === "") {
+                        $(this).parent().text(content);
+                    }else {
+                        $(this).parent().text(value);
+                    }
+                })
+            })
+
+            $(".selTd").dblclick(function (e) {
+                let td = $(e.currentTarget);
+                let content = td[0].textContent;
+                // debugger;
+                if (td[0].firstElementChild != null && td[0].firstElementChild.tagName === "SELECT") {
+                    return;
+                }
+                td.empty();
+                let select = $("<select>" +
+                    "<option value='男'>男</option> " +
+                    "<option value='女'>女</option> " +
+                    "</select>");
+                select.val(content);
+                td.append(select);
+                select.focus();
+                select.blur(function () {
+                    let value = this.value;
+                    $(this).parent().text(value);
+                })
+            })
+
+            $("#table tbody input[name='cbTr']").change(function (e) {
+                let cb = $(e.currentTarget);
+                if (cb[0].checked == false) {
+                    $("#selectAll").prop('checked', false);
+                } else {
+                    var cbs = $("input[name='cbTr']");
+                    for (let i = 0; i < cbs.length; i++) {
+                        if (cbs[i].checked == false) {
+                            return;
+                        };
+                    }
+                    $("#selectAll")[0].checked = true;
+                }
+
+            })
+
+        }
+
+    </script>
+
+</head>
+<body>
+<div id="StuInfo">
+    <h1>Student Info</h1>
+    <div>
+        <label for="txtName">姓名：</label>
+        <input type="text" id="txtName">
+        <br>
+        <label for="txtAge">年龄：</label>
+        <input type="text" id="txtAge">
+        <br>
+        <label for="selGender">性别：</label>
+        <select name="gender" id="selGender">
+            <option value="男">男</option>
+            <option value="女">女</option>
+        </select>
+    </div>
+    <span>
+        <input type="button" value="ADD" id="btnAdd">
+        <input type="button" value="DELETE" id="btnDelete">
+        <input type="button" value="SUBMIT" id="btnSubmit">
+    </span>
+    <table id="table">
+        <thead>
+        <tr>
+            <td id="checkBox"><input type="checkbox" id="selectAll"><label for="selectAll">全选</label></td>
+            <td class="stuName">姓名</td>
+            <td class="stuAge">年龄</td>
+            <td class="stuGender">性别</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="checkbox" name="cbTr"></td>
+            <td class="txtTd">张三</td>
+            <td class="txtTd">23</td>
+            <td class="selTd">男</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="cbTr"></td>
+            <td class="txtTd">李四</td>
+            <td class="txtTd">23</td>
+            <td class="selTd">男</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="cbTr"></td>
+            <td class="txtTd">王五</td>
+            <td class="txtTd">23</td>
+            <td class="selTd">男</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="cbTr"></td>
+            <td class="txtTd">赵六</td>
+            <td class="txtTd">23</td>
+            <td class="selTd">男</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

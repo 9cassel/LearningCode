@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>imgTest</title>
+    <style>
+
+    </style>
+
+</head>
+<body onload="init()">
+<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595946101641&di=83e9cd6d71a9ad824b120a87bf80ca0c&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180121%2F4b40ed922532499b8da32fee37d2f850.jpeg"
+     alt="卡通法斗" id="img" style="margin-left: 0px; margin-top: 0px; width: 200px; height: 200px">
+<script>
+
+    var img = document.getElementById("img");
+    var interval;
+    var winWidth;
+    var winHeight;
+    var marginXStep = 10;
+    var marginYStep = 10;
+    var marginTop;
+    var marginLeft;
+    //获取窗口宽度
+    if (window.innerWidth)
+        winWidth = window.innerWidth;
+    else if ((document.body) && (document.body.clientWidth))
+        winWidth = document.body.clientWidth;
+    //获取窗口高度
+    if (window.innerHeight)
+        winHeight = window.innerHeight;
+    else if ((document.body) && (document.body.clientHeight))
+        winHeight = document.body.clientHeight;
+    //通过深入Document内部对body进行检测，获取窗口大小
+    if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth)
+    {
+        winHeight = document.documentElement.clientHeight;
+        winWidth = document.documentElement.clientWidth;
+    }
+
+
+    function init() {
+        interval = setInterval(action,100);
+    }
+
+    function action() {
+        marginTop = parseInt(img.style.marginTop);
+        marginLeft = parseInt(img.style.marginLeft);
+        // console.log(winWidth);
+        // console.log(winHeight);
+        // var imgHeight = parseInt(img.style.height);
+        // var imgWidth = parseInt(img.style.width);
+        if (marginLeft + parseInt(img.style.width) > winWidth) {
+            marginLeft = winWidth - parseInt(img.style.width);
+            marginXStep = -marginXStep;
+        } else if (marginLeft + parseInt(img.style.marginLeft) < 0) {
+            marginLeft = 0;
+            console.log(marginLeft);
+            marginXStep = -marginXStep;
+        } else {
+            marginLeft += marginXStep;
+        }
+        img.style.marginLeft = marginLeft + "px";
+
+        if (marginTop + parseInt(img.style.height) > winHeight) {
+            marginTop = winHeight - parseInt(img.style.height);
+            marginYStep = -marginYStep;
+
+        } else if (marginTop + parseInt(img.style.marginTop) < 0) {
+            marginTop = 0;
+            console.log(marginTop);
+            marginYStep = -marginYStep;
+        } else {
+            marginTop += marginYStep;
+        }
+        img.style.marginTop = marginTop + "px";
+
+    }
+
+    img.onmouseenter = function () {
+        clearInterval(interval);
+    }
+    img.onmouseleave = init;
+
+</script>
+</body>
+</html>

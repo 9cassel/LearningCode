@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <style type="text/css">
+        #register {
+            border: black solid 5px;
+            width: 40%;
+            margin: 0 auto;
+        }
+
+        div {
+            margin-top: 3%;
+            margin-bottom: 3%;
+            margin-left: 5%;
+        }
+
+        div h1 {
+            width: 100%;
+            margin: 5% auto;
+            text-align: center;
+        }
+
+        div label {
+            margin-right: 5%;
+        }
+
+        .error {
+            color: red;
+            margin-left: 20px;
+        }
+
+        .space {
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        function beforeSubmit() {
+            var user = document.getElementById("user");
+            var pwd = document.getElementById("password");
+            if (user.value.trim() === "") {
+                var userError = document.getElementById("userError");
+                userError.hidden = false;
+                return false;
+            } else if (pwd.value.trim() === "") {
+                var pwdError = document.getElementById("pwdError");
+                pwdError.hidden = false;
+                return false;
+            }
+            return true;
+        }
+
+        function isHidden(id) {
+            var hid = document.getElementById(id);
+            if (hid.hidden === false) {
+                hid.hidden = true;
+            }
+        }
+
+        var provinces = ["Hunan", "Fujian", "Guangdong"];
+        var hunan = ["Changsha", "Shaoyang", "Hengyang"];
+        var fujian = ["Xiamen", "Quanzhou", "Fuzhou"];
+        var guangdong = ["Guangzhou", "Shenzhen", "FoShan"];
+        function pros() {
+            var pros = document.getElementById("pros");
+            var options = pros.options;
+            for (var i = 0; i < provinces.length; i++) {
+                var opt = new Option(provinces[i]);
+                options.add(opt);
+            }
+        }
+
+        function changeSel(sel1, sel2) {
+            var select1 = document.getElementById(sel1);
+            var proOpts = select1.options;
+            var optIndex = proOpts.selectedIndex;
+            var optTxt = proOpts.item(optIndex).textContent;
+            var city;
+            switch (optTxt) {
+                case "Hunan":
+                    city = hunan; break;
+                case "Fujian":
+                    city = fujian; break;
+                case "Guangdong":
+                    city = guangdong; break;
+            }
+            var select2 = document.getElementById(sel2);
+            var cityOpts = select2.options;
+            cityOpts.length = 1;
+            for (var i = 0; i < city.length; i++) {
+                var opt = new Option(city[i]);
+                cityOpts.add(opt);
+            }
+        }
+
+        function init() {
+            pros();
+        }
+    </script>
+
+</head>
+<body onload="init()">
+<div id="register">
+    <h1>Register</h1>
+    <form id="myForm" action="#" onsubmit="return beforeSubmit()">
+        <div>
+            <label for="user">UserName:</label>
+            <br>
+            <input type="text" id="user" onkeypress="isHidden('userError')">
+            <label for="user" hidden id="userError" class="error">User name can not be null!</label>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <br>
+            <input type="password" id="password" onkeypress="isHidden('pwdError')">
+            <label for="password" hidden id="pwdError" class="error">User name can not be null!</label>
+        </div>
+        <div>
+            <label>Gender:</label>
+            <label>
+                <input type="radio" name="gender" value="male">
+                male
+            </label>
+            <span class="space"></span>
+            <label>
+                <input type="radio" name="gender" value="female">
+                female
+            </label>
+        </div>
+        <div>
+            <label for="age">Age:</label>
+            <input type="text" id="age" size="5">
+        </div>
+        <div>
+            <label for="email">E-mail:</label>
+            <br>
+            <input type="text" id="email">
+        </div>
+        <div>
+            <label for="pros">Province:</label>
+            <select name="province" id="pros" onchange="changeSel('pros','city')">
+                <option value="null">select...</option>
+            </select>
+
+            <span class="space"></span>
+
+            <label for="city">City:</label>
+            <select name="city" id="city">
+                <option value="null">select...</option>
+            </select>
+
+        </div>
+        <div>
+            <input type="submit">
+            <input type="reset">
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
