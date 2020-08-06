@@ -8,9 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>Hello Servlet!</title>
+    <style>
+      #title {
+        width: 100%;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-  $END$
+  <div id="title"><h1>Welcome to Java!</h1></div>
   </body>
 </html>
