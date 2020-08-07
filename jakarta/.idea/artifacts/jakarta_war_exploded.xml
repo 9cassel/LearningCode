@@ -7,7 +7,11 @@
           <element id="module-output" name="jakarta" />
         </element>
         <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/../../../lib/jakarta-taglibs-standard-1.1.2/lib/standard.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/../../../lib/jakarta-taglibs-standard-1.1.2/lib/jstl.jar" />
           <element id="library" level="project" name="mysql-connector-java-8.0.20" />
+          <element id="library" level="project" name="jstl" />
+          <element id="library" level="project" name="standard" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="jakarta/web/Web" />

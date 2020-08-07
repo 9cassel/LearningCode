@@ -7,23 +7,32 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class JDBCUtil {
+public class StuDao {
 
     private final static String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
     private final static String URL = "jdbc:mysql://localhost:3306/jdbc?serverTimezone=Asia/Shanghai";
-    private static Connection conn = null;
     private static String sql = null;
 
     static {
         try {
             Class.forName(DRIVER_CLASS);
-            conn = DriverManager.getConnection(URL, "root", "123456");
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
+    public static Connection getConn() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(URL, "root", "123456");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return conn;
+    }
+
     public static int addStu(Student student) {
+        Connection conn = StuDao.getConn();
         sql = "insert into student(id, name, age) values (? , ?, ?);";
         PreparedStatement ps = null;
         int row = 0;
@@ -42,6 +51,7 @@ public class JDBCUtil {
     }
 
     public static int deleteStu(int id) {
+        Connection conn = StuDao.getConn();
         sql = "delete from student where id = ?;";
         PreparedStatement ps = null;
         int row = 0;
@@ -58,6 +68,7 @@ public class JDBCUtil {
     }
 
     public static int updateStu(Student student) {
+        Connection conn = StuDao.getConn();
         sql = "update student set name = ?, age = ? where id = ?;";
         PreparedStatement ps = null;
         int row = 0;
@@ -76,6 +87,7 @@ public class JDBCUtil {
     }
 
     public static Student selectOne(int id) {
+        Connection conn = StuDao.getConn();
         sql = "select name, age from student where id = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -98,6 +110,7 @@ public class JDBCUtil {
     }
 
     public static ArrayList<Student> selectAll() {
+        Connection conn = StuDao.getConn();
         sql = "select id, name, age from student";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -121,6 +134,7 @@ public class JDBCUtil {
     }
 
     public static Paging selectSplit(int currentPage, int pageSize) {
+        Connection conn = StuDao.getConn();
         Paging paging = new Paging();
         ArrayList<Student> datas = new ArrayList<>();
         String sql1 = "select count(1) from student";
@@ -142,7 +156,7 @@ public class JDBCUtil {
         int defaultPage = 1;
         if (currentPage <= 0) {
             currentPage = defaultPage;
-        } else if (currentPage > paging.getTotalPage()) {
+        } else if (currentPage >= paging.getTotalPage()) {
             currentPage = paging.getTotalPage();
         }
         paging.setCurrentPage(currentPage);
@@ -151,6 +165,69 @@ public class JDBCUtil {
             ps = conn.prepareStatement(sql2);
             ps.setInt(1, (currentPage - 1) * pageSize);
             ps.setInt(2, pageSize);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Student student = new Student();
+                student.setId(rs.getInt(1));
+                student.setName(rs.getString(2));
+                student.setAge(rs.getInt(3));
+                datas.add(student);
+            }
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+        } finally {
+            close(conn, ps, rs);
+        }
+        paging.setDatas(datas);
+        paging.setPageSize(pageSize);
+        return paging;
+    }
+
+    public static Paging selectSplit(int currentPage, int pageSize, String para) {
+        Connection conn = StuDao.getConn();
+        Paging paging = new Paging();
+        ArrayList<Student> datas = new ArrayList<>();
+        String txt = ("".equals(para) || para == null) ? "%" : "%" + para + "%";
+        String sql1 = "select count(1)" +
+                "from student " +
+                "where id like ? or name like ? or age like ? ";
+        String sql2 = "select id, name, age " +
+                "from student " +
+                "where id like ? or name like ? or age like ? " +
+                "order by id  limit ?, ?;";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = conn.prepareStatement(sql1);
+            ps.setObject(1, txt);
+            ps.setObject(2, txt);
+            ps.setObject(3, txt);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int totalCount = rs.getInt(1);
+                paging.setTotalCount(totalCount);
+                int totalPage = (totalCount + pageSize - 1) / pageSize;
+                paging.setTotalPage(totalPage);
+            }
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+        }
+
+        int defaultPage = 1;
+        if (currentPage <= 0) {
+            currentPage = defaultPage;
+        } else if (currentPage >= paging.getTotalPage()) {
+            currentPage = paging.getTotalPage();
+        }
+        paging.setCurrentPage(currentPage);
+
+        try {
+            ps = conn.prepareStatement(sql2);
+            ps.setObject(1, txt);
+            ps.setObject(2, txt);
+            ps.setObject(3, txt);
+            ps.setInt(4, (currentPage - 1) * pageSize);
+            ps.setInt(5, pageSize);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Student student = new Student();
@@ -194,7 +271,7 @@ public class JDBCUtil {
     }
 
 //    public static void main(String[] args) {
-//        for (int i = 0; i < 100; i++) {
+//            for (int i = 0; i < 100; i++) {
 //            int id = 100 + i;
 //            String name = "stu" + id;
 //            int age = 20 + i % 20;
