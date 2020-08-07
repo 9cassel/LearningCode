@@ -2,31 +2,31 @@
 <dataSource name="@localhost">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.19">
     <root id="1">
-      <ServerVersion>8.0.20</ServerVersion>
+      <ServerVersion>8.0.19</ServerVersion>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <DefaultCasing>lower/lower</DefaultCasing>
+      <DefaultCasing>mixed/mixed</DefaultCasing>
     </root>
-    <schema id="2" parent="1" name="information_schema">
+    <schema id="2" parent="1" name="houdunren">
       <Current>1</Current>
       <Collation>utf8_general_ci</Collation>
     </schema>
-    <schema id="3" parent="1" name="jdbc">
+    <schema id="3" parent="1" name="information_schema">
+      <Collation>utf8_general_ci</Collation>
+    </schema>
+    <schema id="4" parent="1" name="jdbc">
       <Collation>utf8mb4_0900_ai_ci</Collation>
     </schema>
-    <schema id="4" parent="1" name="mysql">
+    <schema id="5" parent="1" name="mysql">
       <Collation>utf8mb4_0900_ai_ci</Collation>
     </schema>
-    <schema id="5" parent="1" name="performance_schema">
+    <schema id="6" parent="1" name="performance_schema">
       <Collation>utf8mb4_0900_ai_ci</Collation>
     </schema>
-    <schema id="6" parent="1" name="stu_ms">
+    <schema id="7" parent="1" name="stu_ms">
       <Collation>utf8mb4_0900_ai_ci</Collation>
     </schema>
-    <schema id="7" parent="1" name="sys">
-      <Collation>utf8mb4_0900_ai_ci</Collation>
-    </schema>
-    <schema id="8" parent="1" name="test">
+    <schema id="8" parent="1" name="sys">
       <Collation>utf8mb4_0900_ai_ci</Collation>
     </schema>
     <collation id="9" parent="1" name="armscii8_bin">
@@ -888,7 +888,8 @@
     </collation>
     <user id="281" parent="1" name="cassel">
       <Host>%</Host>
-      <ObjectGrants>SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,RELOAD,SHUTDOWN,PROCESS,FILE,REFERENCES,INDEX,ALTER,SHOW DATABASES,SUPER,CREATE TEMPORARY TABLES,LOCK TABLES,EXECUTE,REPLICATION SLAVE,REPLICATION CLIENT,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,CREATE USER,EVENT,TRIGGER,CREATE TABLESPACE!
+      <ObjectGrants>SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,RELOAD,SHUTDOWN,PROCESS,FILE,REFERENCES,INDEX,ALTER,SHOW DATABASES,SUPER,CREATE TEMPORARY TABLES,LOCK TABLES,EXECUTE,REPLICATION SLAVE,REPLICATION CLIENT,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,CREATE USER,EVENT,TRIGGER,CREATE TABLESPACE,CREATE ROLE,DROP ROLE
+APPLICATION_PASSWORD_ADMIN,AUDIT_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,GROUP_REPLICATION_ADMIN,INNODB_REDO_LOG_ARCHIVE,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,XA_RECOVER_ADMIN
 </ObjectGrants>
     </user>
     <user id="282" parent="1" name="mysql.infoschema">
@@ -913,115 +914,28 @@ SELECT|sys.sys_config:null
     <user id="285" parent="1" name="root">
       <Host>localhost</Host>
       <ObjectGrants>SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,RELOAD,SHUTDOWN,PROCESS,FILE,REFERENCES,INDEX,ALTER,SHOW DATABASES,SUPER,CREATE TEMPORARY TABLES,LOCK TABLES,EXECUTE,REPLICATION SLAVE,REPLICATION CLIENT,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,CREATE USER,EVENT,TRIGGER,CREATE TABLESPACE,CREATE ROLE,DROP ROLE!
+APPLICATION_PASSWORD_ADMIN,AUDIT_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,GROUP_REPLICATION_ADMIN,INNODB_REDO_LOG_ARCHIVE,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,XA_RECOVER_ADMIN!
 </ObjectGrants>
     </user>
-    <table id="286" parent="3" name="student"/>
-    <table id="287" parent="6" name="major"/>
-    <table id="288" parent="6" name="major_subject"/>
-    <table id="289" parent="6" name="stu_info"/>
-    <table id="290" parent="6" name="stu_score"/>
-    <table id="291" parent="6" name="subject"/>
-    <table id="292" parent="6" name="user"/>
-    <column id="293" parent="286" name="id">
+    <table id="286" parent="4" name="student"/>
+    <column id="287" parent="286" name="id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="294" parent="286" name="name">
+    <column id="288" parent="286" name="name">
       <Position>2</Position>
-      <DataType>varchar(10)|0s</DataType>
+      <DataType>varchar(20)|0s</DataType>
     </column>
-    <column id="295" parent="286" name="age">
+    <column id="289" parent="286" name="age">
       <Position>3</Position>
       <DataType>int|0s</DataType>
     </column>
-    <key id="296" parent="286" name="PRIMARY">
+    <key id="290" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="297" parent="287" name="major">
-      <Position>1</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="298" parent="288" name="subject">
-      <Position>1</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="299" parent="288" name="major">
-      <Position>2</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="300" parent="288" name="course_nature">
-      <Position>3</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="301" parent="289" name="id">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="302" parent="289" name="stuName">
-      <Position>2</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="303" parent="289" name="gender">
-      <Position>3</Position>
-      <DataType>char(1)|0s</DataType>
-    </column>
-    <column id="304" parent="289" name="age">
-      <Position>4</Position>
-      <DataType>tinyint(1)|0s</DataType>
-    </column>
-    <column id="305" parent="289" name="enrollment">
-      <Position>5</Position>
-      <DataType>int|0s</DataType>
-    </column>
-    <column id="306" parent="289" name="major">
-      <Position>6</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="307" parent="289" name="address">
-      <Position>7</Position>
-      <DataType>varchar(50)|0s</DataType>
-    </column>
-    <key id="308" parent="289" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="309" parent="290" name="id">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-    </column>
-    <column id="310" parent="290" name="stuName">
-      <Position>2</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="311" parent="290" name="major">
-      <Position>3</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="312" parent="290" name="subject">
-      <Position>4</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="313" parent="290" name="score">
-      <Position>5</Position>
-      <DataType>int|0s</DataType>
-    </column>
-    <column id="314" parent="291" name="subject">
-      <Position>1</Position>
-      <DataType>varchar(20)|0s</DataType>
-    </column>
-    <column id="315" parent="292" name="user">
-      <Position>1</Position>
-      <DataType>varchar(10)|0s</DataType>
-    </column>
-    <column id="316" parent="292" name="password">
-      <Position>2</Position>
-      <DataType>varchar(16)|0s</DataType>
-    </column>
   </database-model>
 </dataSource>
