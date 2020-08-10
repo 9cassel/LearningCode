@@ -18,6 +18,8 @@ public class StuManager extends HttpServlet {
         doGet(request, response);
     }
 
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String method = request.getParameter("method");
@@ -61,6 +63,8 @@ public class StuManager extends HttpServlet {
     }
 
     private void handleGetPage(HttpServletRequest request, HttpServletResponse response) {
+
+
         String text = request.getParameter("text");
         if (text == null) {
             text = "";
@@ -80,7 +84,8 @@ public class StuManager extends HttpServlet {
         } catch (NumberFormatException e) {
         }
         Paging paging = StuDao.selectSplit(currentPage, pageSize, text);
-        request.setAttribute("paging", paging);
+//        request.setAttribute("paging", paging);
+
         try {
             request.getRequestDispatcher("stuPage.jsp").forward(request, response);
         } catch (ServletException e) {
